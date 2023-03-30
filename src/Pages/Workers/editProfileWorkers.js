@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   addSkill,
@@ -8,17 +8,26 @@ import {
   putProfileWorkers,
   addPortofolio,
 } from "../../Storages/Actions/ProfileWorkers";
-import NavbarCorporate from "../../Component/Navbar/navbarCorporate";
+import NavbarUser from "../../Component/Navbar/navbar";
 import Footer from "../../Component/Footer/footerCorporate";
 import IconProfile from "../../Assets/NavCorporate/louisth.png";
 import IconMap from "../../Assets/Profile/mappin.png";
 import IconEdit from "../../Assets/Profile/edit.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function EditProfileWorkers() {
   const name = localStorage.getItem("nama");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const put_profileWorkers = useSelector((state) => state.put_profileWorkers);
+  const add_skill = useSelector((state) => state.add_skill);
+  const add_experiences = useSelector((state) => state.add_experiences);
+  const add_portofolio = useSelector((state) => state.add_portofolio);
+  const toastLoading = () =>
+    toast.success("Please wait...", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   const coursesPage = () => {
     navigate("/edit/detail-profile-workers");
   };
@@ -41,6 +50,11 @@ export default function EditProfileWorkers() {
     console.log(data);
     dispatch(putProfileWorkers(data, navigate));
   };
+
+  useEffect(() => {
+    localStorage.setItem("nama", nama);
+  }, [nama]);
+
   //add skill pekerja
   const [nama_skill, setNamaSkill] = useState("");
   const addSkillWorkers = (e) => {
@@ -99,7 +113,8 @@ export default function EditProfileWorkers() {
 
   return (
     <div style={{ background: "#E5E5E5" }}>
-      <NavbarCorporate />
+      <NavbarUser />
+      <ToastContainer />
       <div className="">
         <div
           className="container-fluid border-0 z-index-1 position-absolute"
@@ -143,12 +158,12 @@ export default function EditProfileWorkers() {
                           </div>
                           <div className="mt-3">
                             <h4 className="mt-1">{name}</h4>
-                            <h6 className="mt-2">{"Web Developer"}</h6>
+                            <h6 className="mt-2">{"job"}</h6>
                             <h6 className="mt-2 mb-3">
                               <img className="img me-1" src={IconMap}></img>
-                              {"Purwokerto, Jawa Tengah"}
+                              {"kota"},{"provinsi"}
                             </h6>
-                            <h6 className="mt-2">{"Freelancer"}</h6>
+                            <h6 className="mt-2">{"deskripsi"}</h6>
                           </div>
                         </div>
                       </div>
@@ -168,6 +183,15 @@ export default function EditProfileWorkers() {
                     >
                       Detail Profile
                     </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger mt-4 p-3"
+                      style={{ borderColor: "#5E50A1", color: "#5E50A1" }}
+                    >
+                      Batal
+                    </button>
+                    {put_profileWorkers.isLoading && toastLoading()}
+                    {put_profileWorkers.errorMessage}
                   </div>
                 </div>
                 <div className="col-8">
@@ -189,6 +213,7 @@ export default function EditProfileWorkers() {
                             Nama Lengkap
                           </label>
                           <input
+                            disabled="disabled"
                             type="text"
                             name="nama"
                             required
@@ -200,6 +225,7 @@ export default function EditProfileWorkers() {
                         <div className="mb-3">
                           <label className="form-label ms-2">Job desk</label>
                           <input
+                            disabled="disabled"
                             type="text"
                             name="job"
                             required
@@ -211,6 +237,7 @@ export default function EditProfileWorkers() {
                         <div className="mb-3">
                           <label className="form-label ms-2">Domisili</label>
                           <input
+                            disabled="disabled"
                             type="text"
                             name="kota"
                             required
@@ -222,6 +249,7 @@ export default function EditProfileWorkers() {
                         <div className="mb-3">
                           <label className="form-label ms-2">Provinsi</label>
                           <input
+                            disabled="disabled"
                             type="text"
                             name="provinsi"
                             required
@@ -235,6 +263,7 @@ export default function EditProfileWorkers() {
                             Tempat kerja
                           </label>
                           <input
+                            disabled="disabled"
                             type="text"
                             name="tempatkerja"
                             required
@@ -248,13 +277,14 @@ export default function EditProfileWorkers() {
                             Deskripsi singkat
                           </label>
                           <textarea
+                            disabled="disabled"
                             type="text"
                             name="deskripsi"
                             required
                             onChange={(e) => setDeskripsi(e.target.value)}
                             className="form-control p-3 mt-0"
                             placeholder={"Tuliskan deskripsi singkat"}
-                            style={{ minHeight: "15vh" }}
+                            style={{ minHeight: "15vh", resize: "none" }}
                           />
                         </div>
                       </div>
@@ -298,6 +328,7 @@ export default function EditProfileWorkers() {
                             <div className="mt-3 mb-3">
                               <button
                                 type="submit"
+                                required
                                 className="btn btn-warning text-white p-3"
                               >
                                 Simpan
@@ -308,10 +339,12 @@ export default function EditProfileWorkers() {
                       </div>
                     </div>
                   </div>
+                  {add_skill.isLoading && toastLoading()}
+                  {add_skill.errorMessage}
                 </div>
               </div>
             </form>
-            {/* Detail Data Diri */}
+            {/*Pengalaman */}
             <div>
               <form onSubmit={addExperienceWorkers}>
                 <div className="row mt-3">
@@ -414,6 +447,8 @@ export default function EditProfileWorkers() {
                             >
                               Tambah Pengalaman Kerja
                             </button>
+                            {add_experiences.isLoading && toastLoading()}
+                            {add_experiences.errorMessage}
                           </div>
                         </div>
                       </div>
@@ -537,6 +572,8 @@ export default function EditProfileWorkers() {
                             >
                               Tambah Portofolio
                             </button>
+                            {add_portofolio.isLoading && toastLoading()}
+                            {add_portofolio.errorMessage}
                           </div>
                         </div>
                       </div>
