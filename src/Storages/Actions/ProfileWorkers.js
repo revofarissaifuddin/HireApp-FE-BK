@@ -103,7 +103,6 @@ export const putProfileWorkers = (data, navigate) => async (dispatch) => {
     );
     const payload = result.data;
     dispatch({ type: "UPDATE_PROFILE_SUCCESS", payload });
-    window.location.reload(false)
     // navigate("/edit/detail-profile-workers");
   } catch (err) {
     dispatch({
@@ -246,7 +245,6 @@ export const addPortofolio = (data, navigate) => async (dispatch) => {
     );
     const payload = result.data;
     dispatch({ type: "ADD_PORTOFOLIO_SUCCESS", payload });
-    window.location.reload(false)
   } catch (err) {
     dispatch({
       type: `ADD_PORTOFOLIO_ERROR`,
