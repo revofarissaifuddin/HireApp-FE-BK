@@ -103,7 +103,7 @@ export const putProfileWorkers = (data, navigate) => async (dispatch) => {
     );
     const payload = result.data;
     dispatch({ type: "UPDATE_PROFILE_SUCCESS", payload });
-    navigate("/edit/profile-workers");
+    window.location.reload(false);
   } catch (err) {
     dispatch({
       type: `UPDATE_PROFILE_FAILED`,
@@ -131,6 +131,7 @@ export const addSkill = (data, navigate) => async (dispatch) => {
     );
     const payload = result.data;
     dispatch({ type: "ADD_SKILL_SUCCESS", payload });
+    window.location.reload(false);
   } catch (err) {
     dispatch({
       type: `ADD_SKILL_FAILED`,
@@ -245,6 +246,7 @@ export const addPortofolio = (data, navigate) => async (dispatch) => {
     );
     const payload = result.data;
     dispatch({ type: "ADD_PORTOFOLIO_SUCCESS", payload });
+    window.location.reload(false);
   } catch (err) {
     dispatch({
       type: `ADD_PORTOFOLIO_ERROR`,
@@ -332,7 +334,6 @@ export const editPortofolio = (id, data, navigate) => async (dispatch) => {
       payload: update_PortofolioWorkers,
     });
     window.location.reload(false) 
-    // navigate("/edit/detail-profile-workers");
   } catch (error) {
     dispatch({
       type: "UPDATE_EXPERIENCE_FAILED",

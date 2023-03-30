@@ -16,15 +16,14 @@ import {
   deletePortofolio,
   editPortofolio,
 } from "../../Storages/Actions/ProfileWorkers";
-import NavbarUser from "../../Component/Navbar/navbar";
+import NavbarCorporate from "../../Component/Navbar/navbarCorporate";
+import Footer from "../../Component/Footer/footerCorporate";
 import IconProfile from "../../Assets/NavCorporate/louisth.png";
 import IconMap from "../../Assets/Profile/mappin.png";
 import IconEdit from "../../Assets/Profile/edit.png";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ImgDef from "../../Assets/Profile/pengalamanKerja.png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function EditDetailProfile() {
   const get_ProfileWorkers = useSelector((state) => state.get_profileWorkers);
@@ -43,18 +42,8 @@ export default function EditDetailProfile() {
   );
   const update_ExperienceWorkers = useSelector((state) => state.put_experience);
   const update_PortofolioWorkers = useSelector((state) => state.put_portofolio);
-
-  // const put_profileWorkers = useSelector((state) => state.put_profileWorkers);
-  const add_skill = useSelector((state) => state.add_skill);
-  const add_experiences = useSelector((state) => state.add_experiences);
-  const add_portofolio = useSelector((state) => state.add_portofolio);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toastLoading = () =>
-    toast.success("Please wait...", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showEditPorto, setShowEditPorto] = useState(false);
@@ -222,8 +211,7 @@ export default function EditDetailProfile() {
   };
   return (
     <div style={{ background: "#E5E5E5" }}>
-      <NavbarUser />
-      <ToastContainer />
+      <NavbarCorporate />
       <div className="">
         <div
           className="container-fluid border-0 z-index-1 position-absolute"
@@ -385,7 +373,7 @@ export default function EditDetailProfile() {
                               placeholder={
                                 item.deskripsi || "Tuliskan deskripsi singkat"
                               }
-                              style={{ minHeight: "15vh", resize: "none" }}
+                              style={{ minHeight: "15vh" }}
                             />
                           </div>
                         </div>
@@ -443,8 +431,6 @@ export default function EditDetailProfile() {
                         </div>
                       </div>
                     </div>
-                    {add_skill.isLoading && toastLoading()}
-                    {add_skill.errorMessage}
                   </div>
                 </div>
               </form>
@@ -593,8 +579,6 @@ export default function EditDetailProfile() {
                             >
                               Tambah Pengalaman Kerja
                             </button>
-                            {add_experiences.isLoading && toastLoading()}
-                            {add_experiences.errorMessage}
                           </div>
                         </div>
                       </div>
@@ -605,7 +589,7 @@ export default function EditDetailProfile() {
               <form></form>
               <Modal show={showEdit} onHide={() => handleCloseEdit()}>
                 {update_ExperienceWorkers.isLoading ? (
-                  toastLoading()
+                  <p>loading...</p>
                 ) : (
                   <>
                     <form onSubmit={UpdateExperienceWorkers}>
@@ -698,7 +682,7 @@ export default function EditDetailProfile() {
               </Modal>
               <Modal show={show} onHide={() => handleClose()}>
                 {delete_ExperienceWorkers.isLoading ? (
-                  <p>Loading...</p>
+                  <p>loading...</p>
                 ) : (
                   <>
                     <Modal.Header closeButton className="bg-white">
@@ -767,7 +751,7 @@ export default function EditDetailProfile() {
                                 </div>
                                 <div className="col-8 border-bottom border-3">
                                   <h4>{item.nama_perusahaan}</h4>
-                                  <Link to={item.link_repo}>{item.link_repo}</Link>
+                                  <Link to={item.link_repo}>Link Repo</Link>
                                   <h6>{item.tipe}</h6>
                                 </div>
                               </div>
@@ -872,8 +856,6 @@ export default function EditDetailProfile() {
                           >
                             Tambah Portofolio
                           </button>
-                          {add_portofolio.isLoading && toastLoading()}
-                          {add_portofolio.errorMessage}
                         </div>
                       </div>
                     </div>
@@ -883,7 +865,7 @@ export default function EditDetailProfile() {
             </form>
             <Modal show={showEditPorto} onHide={() => handleCloseEditPorto()}>
               {update_PortofolioWorkers.isLoading ? (
-                toastLoading()
+                <p>loading...</p>
               ) : (
                 <>
                   <form onSubmit={UpdatePortofolioWorkers}>
@@ -1000,7 +982,7 @@ export default function EditDetailProfile() {
               onHide={() => handleCloseDeletePorto()}
             >
               {delete_PortofolioceWorkers.isLoading ? (
-                <p>Loading...</p>
+                <p>loading...</p>
               ) : (
                 <>
                   <Modal.Header closeButton className="bg-white">
@@ -1025,6 +1007,14 @@ export default function EditDetailProfile() {
             </Modal>
           </div>
         </div>
+      </div>
+      <div
+        className="container-fluid z-index-2 position-absolute top-50 start-50 translate-middle"
+        style={{
+          marginTop: "4000px",
+        }}
+      >
+        <Footer />
       </div>
     </div>
   );
