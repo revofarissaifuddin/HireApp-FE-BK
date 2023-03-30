@@ -295,8 +295,6 @@ export default function EditDetailProfile() {
                       >
                         Batal
                       </button>
-                      {put_profileWorkers.isLoading && toastLoading()}
-                      {put_profileWorkers.errorMessage}
                     </div>
                   </div>
                   <div className="col-8">
