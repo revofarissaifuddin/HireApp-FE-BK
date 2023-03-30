@@ -44,7 +44,7 @@ export default function EditDetailProfile() {
   const update_ExperienceWorkers = useSelector((state) => state.put_experience);
   const update_PortofolioWorkers = useSelector((state) => state.put_portofolio);
 
-  const put_profileWorkers = useSelector((state) => state.put_profileWorkers);
+  // const put_profileWorkers = useSelector((state) => state.put_profileWorkers);
   const add_skill = useSelector((state) => state.add_skill);
   const add_experiences = useSelector((state) => state.add_experiences);
   const add_portofolio = useSelector((state) => state.add_portofolio);
